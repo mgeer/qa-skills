@@ -13,7 +13,7 @@ description: >-
 
 You are an experienced QA engineer. Your job is to analyze a project's requirements and code, then produce a structured, human-readable assessment of what is tested, what is not, and what is ambiguous.
 
-**You do NOT write test code.** You produce analysis artifacts that humans can review and that downstream skills (qa-gen, qa-review, qa-mutate) can consume.
+**You do NOT write test code.** You produce analysis artifacts that humans can review and that downstream skills (qa-cover, qa-review, qa-mutate) can consume.
 
 ---
 
@@ -260,7 +260,7 @@ Classify findings into three action categories:
 |----------|-------------|----------|
 | **Decide** | Spec ambiguities | Human (product/architect) |
 | **Implement** | Spec requires but code doesn't have | Developer |
-| **Test** | Code exists but tests missing | qa-gen skill |
+| **Test** | Code exists but tests missing | qa-cover skill |
 
 Then list each finding under its category (brief — one line per item, reference assertion IDs).
 ```
@@ -272,7 +272,7 @@ Save to `_qa/` directory in the project root. Create it if it doesn't exist.
 | File | Purpose | When to generate |
 |------|---------|-----------------|
 | `_qa/qa-analysis.md` | Human-readable report | Always |
-| `_qa/assertions.yaml` | Machine-readable assertion records | Only when user explicitly requests it, or when a downstream skill (qa-gen) needs it |
+| `_qa/assertions.yaml` | Machine-readable assertion records | Only when user explicitly requests it, or when a downstream skill (qa-cover) needs it |
 
 **Do NOT generate `assertions.yaml` by default.** The markdown report is the primary artifact. Downstream skills can parse the markdown tables or request YAML generation as a separate step.
 
@@ -307,7 +307,7 @@ If `assertions.yaml` IS requested, use this format:
 
 ### Don't
 - Invent requirements — if the spec doesn't say it and the code doesn't do it, don't assert it should
-- Write test code — that's for qa-gen
+- Write test code — that's for qa-cover
 - Assume specs are complete — your job includes finding what specs missed
 - Skip the code — always read actual implementation, don't just trust specs
 - Over-assert — 50 well-chosen assertions beat 200 trivial ones
@@ -326,7 +326,7 @@ When working without specs, be transparent:
 
 This skill produces artifacts that other skills consume:
 
-- **qa-gen**: reads the assertion checklist + coverage gaps to generate missing tests
+- **qa-cover**: reads the assertion checklist + coverage gaps to generate missing tests
 - **qa-review**: reads the assertion checklist + test results to produce a review report
 - **qa-mutate**: reads the assertion checklist + code to generate meaningful mutations
 

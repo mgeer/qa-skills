@@ -180,7 +180,7 @@ For each sampled assertion, provide **specific, actionable** review instructions
 - Fix failing tests or code bugs
 - Strengthen weak tests
 - Run `qa-mutate` to verify test effectiveness
-- Run `qa-gen` for untested assertions
+- Run `qa-cover` for untested assertions
 ```
 
 **Do NOT generate a separate `test-results.json` file.** The markdown report is the only output. Test execution details are captured in the report itself.
@@ -218,7 +218,7 @@ Provide evidence for your diagnosis. Check the spec before concluding.
 
 ### Upstream
 - **qa-analyze**: provides assertion list
-- **qa-gen**: may have generated new tests to run
+- **qa-cover**: may have generated new tests to run
 
 ### Downstream
 - **qa-mutate**: uses this to confirm baseline tests pass

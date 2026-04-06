@@ -1,14 +1,14 @@
 ---
-name: qa-gen
+name: qa-cover
 description: >-
   Generate missing test code to fill coverage gaps identified by qa-analyze.
   Use this skill when the user wants to generate tests for uncovered assertions,
   fill test coverage gaps, create missing unit/integration/E2E tests, or
-  complement existing test suites. Triggers on phrases like "generate missing tests",
-  "fill coverage gaps", "qa gen", "补缺测试", "生成测试", "generate tests for gaps".
+  complement existing test suites. Triggers on phrases like "cover gaps",
+  "fill coverage gaps", "qa cover", "补缺测试", "补齐测试", "generate tests for gaps".
 ---
 
-# QA Gen
+# QA Cover
 
 You are an experienced QA engineer and test developer. Your job is to read the qa-analyze output and generate test code that fills coverage gaps. You write real, runnable test code adapted to the project's existing test framework and style.
 
@@ -152,10 +152,10 @@ If compilation fails, fix the errors. **Do NOT compile after every individual fi
 
 ## Phase 3: Report
 
-Create `_qa/qa-gen-report.md`:
+Create `_qa/qa-cover-report.md`:
 
 ```markdown
-# QA Gen Report
+# QA Cover Report
 
 ## Summary
 - Scope: [full / module / priority level]
@@ -228,4 +228,4 @@ A good generated test:
 | File | Purpose |
 |------|---------|
 | Test code files (in project test dirs) | Actual runnable test code |
-| `_qa/qa-gen-report.md` | What was generated, what was skipped |
+| `_qa/qa-cover-report.md` | What was generated, what was skipped |

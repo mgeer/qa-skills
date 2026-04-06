@@ -275,7 +275,7 @@ git checkout -- <mutated-file>
 - **qa-review**: confirms baseline tests pass before mutation testing
 
 ### Downstream
-- Surviving mutations feed back to **qa-gen** (generate tests to catch them)
+- Surviving mutations feed back to **qa-cover** (generate tests to catch them)
 
 ### Output files
 
