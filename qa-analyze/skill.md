@@ -37,9 +37,22 @@ Check if the user specified a module or spec to analyze (e.g., `qa-analyze billi
 
 If `_qa/qa-analysis.md` already exists:
 
-1. Check what has changed since the last analysis (use `git diff`, file modification times, or ask the user what changed)
-2. Default to **incremental mode**: keep unchanged assertions, only re-analyze affected modules
-3. If the user wants a full re-analysis, they must explicitly say so (e.g., `qa-analyze --full`)
+1. **Read the frontmatter** to get the last analyzed commit SHA:
+   ```
+   ---
+   last_analyzed_commit: a1b2c3f
+   analyzed_at: 2026-04-07
+   ---
+   ```
+2. **Determine what changed** since that commit:
+   - If git is available: `git diff <sha>..HEAD --name-only`
+   - If git is unavailable or no commit recorded: ask the user what changed, or fall back to full run
+3. **Scope re-analysis to changed files only**:
+   - Spec files changed → re-extract assertions for those specs only
+   - Source/test files changed → redo coverage mapping for affected assertions only
+   - Unchanged modules → keep existing assertions as-is
+4. After updating, write back `last_analyzed_commit: <current HEAD SHA>` and `analyzed_at: <today>`
+5. If the user wants a full re-analysis, they must explicitly say so (e.g., `qa-analyze --full`)
 
 ### Guardrails
 
@@ -271,8 +284,21 @@ Save to `_qa/` directory in the project root. Create it if it doesn't exist.
 
 | File | Purpose | When to generate |
 |------|---------|-----------------|
-| `_qa/qa-analysis.md` | Human-readable report | Always |
+| `_qa/qa-analysis.md` | Human-readable report with frontmatter tracking commit SHA | Always |
 | `_qa/assertions.yaml` | Machine-readable assertion records | Only when user explicitly requests it, or when a downstream skill (qa-cover) needs it |
+
+`qa-analysis.md` must begin with frontmatter:
+
+```markdown
+---
+last_analyzed_commit: <git SHA or "none" if git unavailable>
+analyzed_at: <YYYY-MM-DD>
+scope: <full | module name>
+---
+
+# QA Analysis Report
+...
+```
 
 **Do NOT generate `assertions.yaml` by default.** The markdown report is the primary artifact. Downstream skills can parse the markdown tables or request YAML generation as a separate step.
 
