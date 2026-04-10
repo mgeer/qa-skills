@@ -93,6 +93,18 @@ Determine its verification status:
 | **untested** | No test covers this assertion |
 | **blocked** | Tests exist but couldn't run |
 
+### Failed test diagnosis
+
+For every **failed** assertion, you MUST determine and label the root cause:
+
+| Label | Meaning | Who handles it |
+|---|---|---|
+| `test bug` | The test itself is wrong — incorrect setup, wrong expectation, bad assertion | qa-cover can fix |
+| `code bug` | The test is correct but the production code has a bug | Human / separate fix workflow |
+| `environment` | Infrastructure not available (DB down, service not running) | Human / environment setup |
+
+This label is required. qa-cover uses it to decide whether it can handle the failure.
+
 ### Weak test detection
 
 A test is "weak" if:
@@ -177,10 +189,10 @@ For each sampled assertion, provide **specific, actionable** review instructions
 - **Top 3 Risks**: [Most concerning gaps]
 
 ## Next Steps
-- Fix failing tests or code bugs
-- Strengthen weak tests
-- Run `qa-mutate` to verify test effectiveness
-- Run `qa-cover` for untested assertions
+- `test bug` failures → run `qa-cover` to fix
+- `code bug` failures → fix production code manually
+- Weak tests → run `qa-cover` to strengthen
+- Untested assertions → run `qa-cover` to generate
 ```
 
 **Do NOT generate a separate `test-results.json` file.** The markdown report is the only output. Test execution details are captured in the report itself.
