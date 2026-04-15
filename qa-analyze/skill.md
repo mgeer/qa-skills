@@ -169,6 +169,8 @@ Each cell is one of:
 
 **Every `covered` or `partial` cell must cite the test file path.** Without evidence, "covered" is an unverifiable claim.
 
+> **Caveat on `covered`**: this label means a test is mapped to the assertion, not that the test's assertions are strong. A test that only calls `verify(repo).save(any())`, checks for non-null, or catches exceptions without asserting the message still counts as `covered`. Assertion-strength verification is **qa-mutate**'s job — qa-analyze answers "is there a test for this rule?", not "is that test strong?". When reporting, do not tell the human "this rule is safe"; tell them "this rule has a test — run qa-mutate to see if the test actually protects it."
+
 Not every assertion needs all three levels. Use judgment:
 - Pure logic → unit test is sufficient
 - API behavior → integration test is key
